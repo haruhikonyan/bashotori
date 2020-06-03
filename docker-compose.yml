@@ -1,0 +1,18 @@
+version: '3.7'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./:/bashotori
+      - node-modules-data:/bashotori/node_modules
+    command: sh -c "yarn && tail -f"
+    ports:
+      - 3456:3456
+    env_file:
+      - .env
+    working_dir: /bashotori
+volumes:
+  node-modules-data:
