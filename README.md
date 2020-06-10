@@ -1,9 +1,7 @@
 # bashotori
-1. Create `.env` to root
+1. Create `.env` to repository root
     - Reference to .env.sample
-2. Exec `$ docker-compose up` at bashotori
-3. Open VSCode for Remote-containers attach to running container
-    - Select `bashotori_app_1`
-4. Open Folder to `/bashotori`
-5. Exec `$ yarn dev` in container.
-6. Access to localhost:3456
+2. Open VSCode for `Remote-containers Open Folder in container`
+    - Select this repository folder.
+3. Exec `$ yarn dev` in container bash.
+4. Access to `localhost:3456`.

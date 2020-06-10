@@ -1,0 +1,16 @@
+  
+{
+  "name": "bashotori",
+  "dockerComposeFile": [
+    "../docker-compose.dev.yml",
+  ],
+  "service": "app",
+  "workspaceFolder": "/bashotori",
+  "settings": {
+    "editor.tabSize": 2,
+    "files.insertFinalNewline": true,
+    "files.trimFinalNewlines": true,
+    "terminal.integrated.shell.linux": "/bin/bash"
+  },
+  "postCreateCommand": "yarn",
+}
