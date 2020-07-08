@@ -9,7 +9,7 @@ router.get('/', async (req, res) => {
 })
 
 router.get('/zoushigaya', async (req, res) => {
-  await main();
+  await main('08', '01');
   res.render("zoushigaya/index");
 })
 

@@ -1,7 +1,6 @@
 import * as puppeteer from 'puppeteer';
- 
 
-const test = async () => {
+const get = async (month: string, day: string) => {
   const browser = await puppeteer.launch({args: ['--no-sandbox', '--disable-setuid-sandbox']});
   const page = await browser.newPage();
   
@@ -38,6 +37,9 @@ const test = async () => {
   await page.click('#chkSat');
   await page.click('#chkSun');
   await page.click('#chkHol');
+  
+  await page.$eval('#txtMonth',  (element, month) => (element as HTMLInputElement).value = month, month);
+  await page.$eval('#txtDay', (element, day) => (element as HTMLInputElement).value = day, day);
   await page.click('#ucPCFooter_btnForward');
   await loadPromise;
 
@@ -52,13 +54,13 @@ const test = async () => {
 
   // 多目的、音楽室、第1、第2
   // const roomIds = ['07', '10', '13', '14']
-  const roomIds = ['13', '14']
-  // TODO もっと上で宣言して月選択に含む
-  const month = '06'
+  // 最大20個までしかチェックができないので絞ってる
+  const roomIds = ['14']
 
   for (const roomId of roomIds) {
     // 0埋め
     for (const day of days.map(d => ( '0' + d ).slice( -2 ))) {
+      // 最大20個までしかチェックができない
       await page.click(`#dlRepeat_ctl00_tpItem_dgTable_ctl${roomId}_b2020${month}${day}`);
     }
   }
@@ -66,14 +68,14 @@ const test = async () => {
   await page.click('#ucPCFooter_btnForward');
   await loadPromise;
   
-
   await page.screenshot({ path: 'screenshots/zoushigaya/home1.png', fullPage: true });
 
   // await page.title() でも良い
   const title = await page.$eval('head > title', e => e.textContent);
   console.log(title)
+  await page.screenshot({ path: 'screenshots/zoushigaya/home1.png', fullPage: true });
 
   await browser.close();
   console.log('end')
 }
-export default test;
+export default get;
