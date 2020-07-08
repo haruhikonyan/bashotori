@@ -11,6 +11,7 @@ services:
     command: sleep infinity
     ports:
       - 3456:3456
+      - 9229:9229
     env_file:
       - .env
     working_dir: /bashotori
