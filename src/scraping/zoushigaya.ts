@@ -53,29 +53,36 @@ const get = async (month: string, day: string) => {
   }
 
   // 多目的、音楽室、第1、第2
-  // const roomIds = ['07', '10', '13', '14']
-  // 最大20個までしかチェックができないので絞ってる
-  const roomIds = ['14']
+  const roomIds = ['07', '10', '13', '14']
 
   for (const roomId of roomIds) {
-    // 0埋め
+    // 更新ボタンを押す
+    loadPromise = page.waitForNavigation();
+    await page.click('#btnUpdate');
+    await loadPromise;
+
+    // 0埋めしてチェックループ
     for (const day of days.map(d => ( '0' + d ).slice( -2 ))) {
       // 最大20個までしかチェックができない
       await page.click(`#dlRepeat_ctl00_tpItem_dgTable_ctl${roomId}_b2020${month}${day}`);
     }
-  }
-  loadPromise = page.waitForNavigation();
-  await page.click('#ucPCFooter_btnForward');
-  await loadPromise;
-  
-  await page.screenshot({ path: 'screenshots/zoushigaya/home1.png', fullPage: true });
+    
+    // 空き情報確認
+    loadPromise = page.waitForNavigation();
+    await page.click('#ucPCFooter_btnForward');
+    await loadPromise;
 
-  // await page.title() でも良い
-  const title = await page.$eval('head > title', e => e.textContent);
-  console.log(title)
-  await page.screenshot({ path: 'screenshots/zoushigaya/home1.png', fullPage: true });
+    await page.screenshot({ path: `screenshots/zoushigaya/home${roomId}.png`, fullPage: true });
+
+    // 戻る
+    loadPromise = page.waitForNavigation();
+    await page.click('#ucPCFooter_btnBack');
+    await loadPromise;
+    
+  }
 
   await browser.close();
   console.log('end')
 }
+
 export default get;
