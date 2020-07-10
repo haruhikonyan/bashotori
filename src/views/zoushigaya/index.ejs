@@ -1,16 +1,47 @@
 <!DOCTYPE html>
 <html>
+<!-- TODO: head 外だし -->
 <head>
   <meta charset="utf-8" />
+  <!-- CSS only -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
+  <!-- JavaScript and dependencies -->
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js" integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/" crossorigin="anonymous"></script>
+
   <title>雑司が谷文化創造館</title>
 </head>
 <body>
-  <h1>空き状況</h1>
-  <div style="display: flex">
-    <img src="/screenshots/zoushigaya/home07.png">
-    <img src="/screenshots/zoushigaya/home10.png">
-    <img src="/screenshots/zoushigaya/home13.png">
-    <img src="/screenshots/zoushigaya/home14.png">
-  </div>
+  <form action="/zoushigaya">
+    <div class="row">
+      <div class="col">
+        <select name="month" class="form-select form-select-lg mb-3">
+          <option selected disabled>対象月</option>
+          <option value="01">1月</option>
+          <option value="02">2月</option>
+          <option value="03">3月</option>
+          <option value="04">4月</option>
+          <option value="05">5月</option>
+          <option value="06">6月</option>
+          <option value="07">7月</option>
+          <option value="08">8月</option>
+          <option value="09">9月</option>
+          <option value="10">10月</option>
+          <option value="11">11月</option>
+          <option value="12">12月</option>
+        </select>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary">確認</button>
+  </form>
+  <% if (month != null) { %>
+    <h1><%= month %>月 空き状況</h1>
+    <div class="d-flex">
+      <img src="/screenshots/zoushigaya/home07.png">
+      <img src="/screenshots/zoushigaya/home10.png">
+      <img src="/screenshots/zoushigaya/home13.png">
+      <img src="/screenshots/zoushigaya/home14.png">
+    </div>
+  <% } %>
 </body>
 </html>
