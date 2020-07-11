@@ -42,12 +42,14 @@
   <% } %>
   <% if (month != null) { %>
     <h1><%= month %>月 空き状況</h1>
-    <div class="d-flex">
-      <img src="/screenshots/zoushigaya/home07.png">
-      <img src="/screenshots/zoushigaya/home10.png">
-      <img src="/screenshots/zoushigaya/home13.png">
-      <img src="/screenshots/zoushigaya/home14.png">
-    </div>
+    <% if (error == null) { %>
+      <div class="d-flex">
+        <img src="/screenshots/zoushigaya/home07.png">
+        <img src="/screenshots/zoushigaya/home10.png">
+        <img src="/screenshots/zoushigaya/home13.png">
+        <img src="/screenshots/zoushigaya/home14.png">
+      </div>
+    <% } %>
   <% } %>
   
 </body>
