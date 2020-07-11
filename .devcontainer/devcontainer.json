@@ -2,7 +2,7 @@
 {
   "name": "bashotori",
   "dockerComposeFile": [
-    "../docker-compose.dev.yml",
+    "./docker-compose.yml",
   ],
   "service": "app",
   "workspaceFolder": "/bashotori",

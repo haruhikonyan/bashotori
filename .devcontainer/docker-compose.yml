@@ -6,14 +6,14 @@ services:
       context: .
       dockerfile: Dockerfile
     volumes:
-      - ./:/bashotori
+      - ../:/bashotori:cached
       - node-modules-data:/bashotori/node_modules
-    command: sleep infinity
     ports:
       - 3456:3456
       - 9229:9229
     env_file:
-      - .env
+      - ../.env
     working_dir: /bashotori
+    tty: true
 volumes:
   node-modules-data:
