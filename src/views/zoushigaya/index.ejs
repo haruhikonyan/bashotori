@@ -19,48 +19,64 @@
   <title>雑司が谷文化創造館</title>
 </head>
 <body>
-  <form action="/zoushigaya">
-    <div class="row">
-      <div class="col">
-        <select name="month" class="form-select form-select-lg mb-3">
-          <option selected disabled>対象月</option>
-          <option value="01">1月</option>
-          <option value="02">2月</option>
-          <option value="03">3月</option>
-          <option value="04">4月</option>
-          <option value="05">5月</option>
-          <option value="06">6月</option>
-          <option value="07">7月</option>
-          <option value="08">8月</option>
-          <option value="09">9月</option>
-          <option value="10">10月</option>
-          <option value="11">11月</option>
-          <option value="12">12月</option>
-        </select>
+  <div class="container">
+    <h1>雑司が谷文化創造館</h1>
+    <form action="/zoushigaya">
+      <select name="month" class="form-select form-select-lg mb-3">
+        <option selected disabled>対象月</option>
+        <option value="01">1月</option>
+        <option value="02">2月</option>
+        <option value="03">3月</option>
+        <option value="04">4月</option>
+        <option value="05">5月</option>
+        <option value="06">6月</option>
+        <option value="07">7月</option>
+        <option value="08">8月</option>
+        <option value="09">9月</option>
+        <option value="10">10月</option>
+        <option value="11">11月</option>
+        <option value="12">12月</option>
+      </select>
+      <div class="form-check form-switch">
+        <input class="form-check-input" type="checkbox" value='07' name="roomIds[]" checked>
+        <label class="form-check-label">音楽室</label>
       </div>
-    </div>
-    <button type="submit" class="btn btn-primary" onClick="javascript:double(this)">確認</button>
-    <div id="bst-loading" class="d-none">
-      <div class="spinner-border" role="status"></div>結構時間かかります
-    </div>
-  </form>
-  <% if (error != null) { %>
-    <div class="alert alert-danger" role="alert">
-      <%= error %>
-      <p>管理者に問い合わせてください</p>
-    </div>
-  <% } %>
+      <div class="form-check form-switch">
+        <input class="form-check-input" type="checkbox" value='10' name="roomIds[]" checked>
+        <label class="form-check-label">多目的ホール</label>
+      </div>
+      <div class="form-check form-switch">
+        <input class="form-check-input" type="checkbox" value='13' name="roomIds[]" checked>
+        <label class="form-check-label">第1練習室</label>
+      </div>
+      <div class="form-check form-switch">
+        <input class="form-check-input" type="checkbox" value='14' name="roomIds[]" checked>
+        <label class="form-check-label">第2練習室</label>
+      </div>
+      <div class="alert alert-warning" role="alert">
+        3ヶ月以上先の音楽室、多目的ホールは空き情報が見られないため、選択するとエラーが出るかもです。
+      </div>
+      <button type="submit" class="btn btn-primary" onClick="javascript:double(this)">確認</button>
+      <div id="bst-loading" class="d-none">
+        <div class="spinner-border" role="status"></div>結構時間かかります
+      </div>
+    </form>
+    <% if (error != null) { %>
+      <div class="alert alert-danger" role="alert">
+        <%= error %>
+        <p>管理者に問い合わせてください</p>
+      </div>
+    <% } %>
+  </div>
   <% if (month != null) { %>
     <h1><%= month %>月 空き状況</h1>
     <% if (error == null) { %>
       <div class="d-flex">
-        <img src="/screenshots/zoushigaya/home07.png">
-        <img src="/screenshots/zoushigaya/home10.png">
-        <img src="/screenshots/zoushigaya/home13.png">
-        <img src="/screenshots/zoushigaya/home14.png">
+        <% roomIds.forEach(roomId => { %>
+          <img src="/screenshots/zoushigaya/<%= roomId %>_<%= month %>.png">
+        <% }) %>
       </div>
     <% } %>
   <% } %>
-  
 </body>
 </html>

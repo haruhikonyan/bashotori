@@ -10,16 +10,17 @@ router.get('/', async (req, res) => {
 
 router.get('/zoushigaya', async (req, res) => {
   const month = req.query.month as string
+  const roomIds = req.query.roomIds as string[]
   // TODO: まともなエラーハンドリング
   let error = null;
   if (month) {
     try {
-      await main(month, '01');
+      await main(month, '01', roomIds);
     } catch (e) {
       error = e
     }
   }
-  res.render("zoushigaya/index", { month, error});
+  res.render("zoushigaya/index", { month, roomIds, error });
 })
 
 export default router;

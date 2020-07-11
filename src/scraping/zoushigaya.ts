@@ -1,6 +1,6 @@
 import * as puppeteer from 'puppeteer';
 
-const get = async (month: string, day: string) => {
+const get = async (month: string, day: string, roomIds: string[]) => {
   console.log(`${month}月 Zousigaya start`)
 
   const browser = await puppeteer.launch({args: ['--no-sandbox', '--disable-setuid-sandbox']});
@@ -54,9 +54,6 @@ const get = async (month: string, day: string) => {
     days.push(((await day.jsonValue()) as string).slice( 0, -1 ))
   }
 
-  // 多目的、音楽室、第1、第2
-  const roomIds = ['07', '10', '13', '14']
-
   for (const roomId of roomIds) {
     console.log(`roomId: ${roomId} start`)
     // 更新ボタンを押す
@@ -66,8 +63,12 @@ const get = async (month: string, day: string) => {
 
     // 0埋めしてチェックループ
     for (const day of days.map(d => ( '0' + d ).slice( -2 ))) {
-      // 最大20個までしかチェックができない
-      await page.click(`#dlRepeat_ctl00_tpItem_dgTable_ctl${roomId}_b2020${month}${day}`);
+      try {
+        // 最大20個までしかチェックができない
+        await page.click(`#dlRepeat_ctl00_tpItem_dgTable_ctl${roomId}_b2020${month}${day}`);
+      } catch (error) {
+        console.log('skip:', error)
+      }
     }
     
     // 空き情報確認
@@ -75,7 +76,7 @@ const get = async (month: string, day: string) => {
     await page.click('#ucPCFooter_btnForward');
     await loadPromise;
 
-    await page.screenshot({ path: `screenshots/zoushigaya/home${roomId}.png`, fullPage: true });
+    await page.screenshot({ path: `screenshots/zoushigaya/${roomId}_${month}.png`, fullPage: true });
     console.log(`roomId: ${roomId} end`)
 
     // 戻る
