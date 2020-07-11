@@ -12,6 +12,7 @@
   <script>
     function double(btn){
       btn.disabled = true;
+      document.getElementById('bst-loading').classList.remove('d-none')
       btn.form.submit();
     }
   </script>
@@ -39,6 +40,9 @@
       </div>
     </div>
     <button type="submit" class="btn btn-primary" onClick="javascript:double(this)">確認</button>
+    <div id="bst-loading" class="d-none">
+      <div class="spinner-border" role="status"></div>結構時間かかります
+    </div>
   </form>
   <% if (error != null) { %>
     <div class="alert alert-danger" role="alert">
