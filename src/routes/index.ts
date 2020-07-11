@@ -10,10 +10,16 @@ router.get('/', async (req, res) => {
 
 router.get('/zoushigaya', async (req, res) => {
   const month = req.query.month as string
+  // TODO: まともなエラーハンドリング
+  let error = null;
   if (month) {
-    await main(month, '01');
+    try {
+      await main(month, '01');
+    } catch (e) {
+      error = e
+    }
   }
-  res.render("zoushigaya/index", { month });
+  res.render("zoushigaya/index", { month, error});
 })
 
 export default router;

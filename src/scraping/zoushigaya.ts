@@ -1,6 +1,8 @@
 import * as puppeteer from 'puppeteer';
 
 const get = async (month: string, day: string) => {
+  console.log(`${month}月 Zousigaya start`)
+
   const browser = await puppeteer.launch({args: ['--no-sandbox', '--disable-setuid-sandbox']});
   const page = await browser.newPage();
   
@@ -56,6 +58,7 @@ const get = async (month: string, day: string) => {
   const roomIds = ['07', '10', '13', '14']
 
   for (const roomId of roomIds) {
+    console.log(`roomId: ${roomId} start`)
     // 更新ボタンを押す
     loadPromise = page.waitForNavigation();
     await page.click('#btnUpdate');
@@ -73,6 +76,7 @@ const get = async (month: string, day: string) => {
     await loadPromise;
 
     await page.screenshot({ path: `screenshots/zoushigaya/home${roomId}.png`, fullPage: true });
+    console.log(`roomId: ${roomId} end`)
 
     // 戻る
     loadPromise = page.waitForNavigation();
@@ -82,7 +86,7 @@ const get = async (month: string, day: string) => {
   }
 
   await browser.close();
-  console.log('end')
+  console.log('Zousigaya end')
 }
 
 export default get;

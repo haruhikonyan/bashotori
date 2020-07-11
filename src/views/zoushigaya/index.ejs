@@ -34,6 +34,12 @@
     </div>
     <button type="submit" class="btn btn-primary">確認</button>
   </form>
+  <% if (error != null) { %>
+    <div class="alert alert-danger" role="alert">
+      <%= error %>
+      <p>管理者に問い合わせてください</p>
+    </div>
+  <% } %>
   <% if (month != null) { %>
     <h1><%= month %>月 空き状況</h1>
     <div class="d-flex">
@@ -43,5 +49,6 @@
       <img src="/screenshots/zoushigaya/home14.png">
     </div>
   <% } %>
+  
 </body>
 </html>
