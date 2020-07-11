@@ -2,6 +2,7 @@
   "compilerOptions": {
     "sourceMap": true,
     "target": "es5", // TSはECMAScript 5に変換
-    "module": "commonjs" // TSのモジュールはES Modulesとして出力
+    "module": "commonjs", // TSのモジュールはES Modulesとして出力
+    "outDir": "./dist"
   }
 }

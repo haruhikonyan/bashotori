@@ -5,7 +5,9 @@
   "license": "MIT",
   "scripts": {
     "dev": "nodemon",
-    "debug": "nodemon --config nodemon.json --exec \"node --inspect=9229 --nolazy -r ts-node/register src/index.ts\""
+    "debug": "nodemon --config nodemon.json --exec \"node --inspect=9229 --nolazy -r ts-node/register src/index.ts\"",
+    "build": "tsc && cp -r src/views dist",
+    "start": "node dist"
   },
   "devDependencies": {
     "@types/express": "^4.17.6",
