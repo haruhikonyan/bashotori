@@ -1,6 +1,7 @@
 import * as Express from 'express';
 
-import main from "../scraping/zoushigaya"
+import zoushigaya from "../scraping/zoushigaya"
+import kotoKu from "../scraping/koto-ku"
 
 const router = Express.Router();
 
@@ -15,12 +16,27 @@ router.get('/zoushigaya', async (req, res) => {
   let error = null;
   if (month) {
     try {
-      await main(month, '01', roomIds);
+      await zoushigaya(month, '01', roomIds);
     } catch (e) {
       error = e
     }
   }
   res.render("zoushigaya/index", { month, roomIds, error });
+})
+
+router.get('/koto-ku', async (req, res) => {
+  const month = req.query.month as string
+  const day = req.query.day as string
+  // TODO: まともなエラーハンドリング
+  let error = null;
+  if (month) {
+    try {
+      await kotoKu(month, day);
+    } catch (e) {
+      error = e
+    }
+  }
+  res.render("koto-ku/index", { month, day, error });
 })
 
 export default router;
