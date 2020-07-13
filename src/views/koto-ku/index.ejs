@@ -24,9 +24,10 @@
         <option value="11">11月</option>
         <option value="12">12月</option>
       </select>
+      開始日付
       <input type='number' name="day" class="form-input mb-3">
       <div class="alert alert-warning" role="alert">
-        注意書き
+        今日以降の日付を入れてください
       </div>
       <button type="submit" class="btn btn-primary" onClick="javascript:double(this)">確認</button>
       <div id="bst-loading" class="d-none">
@@ -43,9 +44,10 @@
   <% if (month != null) { %>
     <h1><%= month %>月 空き状況</h1>
     <% if (error == null) { %>
-      <div class="d-flex">
-        <img src="/screenshots/koto-ku/<%= month %>_<%= day %>.png">
-      </div>
+      <img src="/screenshots/koto-ku/<%= month %>_<%= day %>_99.png">
+      <% for (let i = 1; i < 20; ++i) { %>
+        <img src="/screenshots/koto-ku/<%= month %>_<%= day %>_<%= i %>.png">
+      <% } %>
     <% } %>
   <% } %>
 <%- include( '../layout/_footer' ); %>
