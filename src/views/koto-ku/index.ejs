@@ -24,10 +24,9 @@
         <option value="11">11月</option>
         <option value="12">12月</option>
       </select>
-      開始日付
-      <input type='number' name="day" class="form-input mb-3">
+      <input class="form-control form-control-lg mb-3" name="day" type="number" placeholder="開始日付(1〜31)" min=1 max=31 value="<%= day ? day : 1 %>">
       <div class="alert alert-warning" role="alert">
-        今日以降の日付を入れてください
+        今日以降の日付をテキスト入れてください
       </div>
       <button type="submit" class="btn btn-primary" onClick="javascript:double(this)">確認</button>
       <div id="bst-loading" class="d-none">
