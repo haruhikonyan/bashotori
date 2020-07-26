@@ -7,7 +7,7 @@
     }
   </script>
   <div class="container">
-    <h1 class="text-center">墨田区</h1>
+    <h1 class="text-center">墨田区(社会福祉会館・みどりコミュニティセンター)</h1>
     <form action="/sumida-ku">
       <select name="month" class="form-select form-select-lg mb-3">
         <option selected disabled>対象月</option>
@@ -24,6 +24,9 @@
         <option value="11">11月</option>
         <option value="12">12月</option>
       </select>
+      <div class="alert alert-warning" role="alert">
+        エラー出ずに画像が表示されなかったら空きが無いです
+      </div>
       <button type="submit" class="btn btn-primary" onClick="javascript:double(this)">確認</button>
       <div id="bst-loading" class="d-none">
         <div class="spinner-border" role="status"></div>結構時間かかります

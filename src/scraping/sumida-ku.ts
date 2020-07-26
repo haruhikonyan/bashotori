@@ -1,4 +1,5 @@
 import * as puppeteer from 'puppeteer';
+import * as fs from 'fs';
 
 const get = async (month: string, day: string) => {
   console.log(`${month}月 Sumida start`)
@@ -62,24 +63,42 @@ const get = async (month: string, day: string) => {
     await page.click('#btnUpdate');
     await loadPromise;
 
+    let freeCount = 0;
+
     // 0埋めしてチェックループ
     for (const day of days.map(d => ( '0' + d ).slice( -2 ))) {
       for (const roomId of placeIdObject[place].roomIds) {
         try {
-          // TODO: ×はチェックを省きたい
-          await page.click(`#dlRepeat_ctl${placeIdObject[place].placeId}_tpItem_dgTable_ctl${roomId}_b2020${month}${day}`);
+          const targetId = `#dlRepeat_ctl${placeIdObject[place].placeId}_tpItem_dgTable_ctl${roomId}_b2020${month}${day}`
+          // × だったらスキップする
+          const targetElement = await page.$(targetId)
+          const status = await targetElement.getProperty('textContent')
+          const statusString = await status.jsonValue() as string
+          if (statusString.includes('×')) { continue }
+
+          await targetElement.click();
+          freeCount++
         } catch (error) {
           console.log('skip:', error)
         }
       }
     }
       
+    const filePath = `screenshots/sumida-ku/${place}_${month}.png`
+    // 空いている部屋がなければスクショがあれば消してループを抜ける
+    if (freeCount === 0) {
+      if (fs.existsSync(filePath)) {
+        // あれば削除
+        fs.unlinkSync(filePath);
+      }
+      continue;
+    }
     // 空き情報確認
     loadPromise = page.waitForNavigation();
     await page.click('#ucPCFooter_btnForward');
     await loadPromise;
 
-    await page.screenshot({ path: `screenshots/sumida-ku/${place}_${month}.png`, fullPage: true });
+    await page.screenshot({ path: filePath, fullPage: true });
 
     // 戻る
     loadPromise = page.waitForNavigation();
