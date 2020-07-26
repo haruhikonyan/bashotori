@@ -2,6 +2,7 @@ import * as Express from 'express';
 
 import zoushigaya from "../scraping/zoushigaya"
 import kotoKu from "../scraping/koto-ku"
+import sumidaKu from "../scraping/sumida-ku"
 
 const router = Express.Router();
 
@@ -37,6 +38,20 @@ router.get('/koto-ku', async (req, res) => {
     }
   }
   res.render("koto-ku/index", { month, day, error });
+})
+
+router.get('/sumida-ku', async (req, res) => {
+  const month = req.query.month as string
+  // TODO: まともなエラーハンドリング
+  let error = null;
+  if (month) {
+    try {
+      await sumidaKu(month, '1');
+    } catch (e) {
+      error = e
+    }
+  }
+  res.render("sumida-ku/index", { month, error });
 })
 
 export default router;

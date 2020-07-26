@@ -1,4 +1,4 @@
-<%- include( '../layout/_header', {title: '墨田社会福祉会館'} ); %>
+<%- include( '../layout/_header', {title: '墨田区'} ); %>
   <script>
     function double(btn){
       btn.disabled = true;
@@ -7,8 +7,8 @@
     }
   </script>
   <div class="container">
-    <h1 class="text-center">墨田社会福祉会館</h1>
-    <form action="/zoushigaya">
+    <h1 class="text-center">墨田区</h1>
+    <form action="/sumida-ku">
       <select name="month" class="form-select form-select-lg mb-3">
         <option selected disabled>対象月</option>
         <option value="01">1月</option>
@@ -24,25 +24,6 @@
         <option value="11">11月</option>
         <option value="12">12月</option>
       </select>
-      <!-- <div class="form-check form-switch">
-        <input class="form-check-input" type="checkbox" value='07' name="roomIds[]" checked>
-        <label class="form-check-label">音楽室</label>
-      </div>
-      <div class="form-check form-switch">
-        <input class="form-check-input" type="checkbox" value='10' name="roomIds[]" checked>
-        <label class="form-check-label">多目的ホール</label>
-      </div>
-      <div class="form-check form-switch">
-        <input class="form-check-input" type="checkbox" value='13' name="roomIds[]" checked>
-        <label class="form-check-label">第1練習室</label>
-      </div>
-      <div class="form-check form-switch">
-        <input class="form-check-input" type="checkbox" value='14' name="roomIds[]" checked>
-        <label class="form-check-label">第2練習室</label>
-      </div>
-      <div class="alert alert-warning" role="alert">
-        3ヶ月以上先の音楽室、多目的ホールは空き情報が見られないため、選択するとエラーが出るかもです。
-      </div> -->
       <button type="submit" class="btn btn-primary" onClick="javascript:double(this)">確認</button>
       <div id="bst-loading" class="d-none">
         <div class="spinner-border" role="status"></div>結構時間かかります
@@ -57,6 +38,13 @@
   </div>
   <% if (month != null) { %>
     <h1><%= month %>月 空き状況</h1>
-    <img src="/screenshots/sumida-ku/<%= month %>.png">
+    <div class="d-flex">
+      <div>
+        <img src="/screenshots/sumida-ku/shakaifukushi_<%= month %>.png">
+      </div>
+      <div>
+        <img src="/screenshots/sumida-ku/midori_<%= month %>.png">
+      </div>
+    </div>
   <% } %>
 <%- include( '../layout/_footer' ); %>
