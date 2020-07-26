@@ -13,11 +13,12 @@ router.get('/', async (req, res) => {
 router.get('/zoushigaya', async (req, res) => {
   const month = req.query.month as string
   const roomIds = req.query.roomIds as string[]
+  const isLoginMode = req.query.isLoginMode === 'true'
   // TODO: まともなエラーハンドリング
   let error = null;
   if (month) {
     try {
-      await zoushigaya(month, '01', roomIds);
+      await zoushigaya(month, '01', roomIds, isLoginMode);
     } catch (e) {
       error = e
     }

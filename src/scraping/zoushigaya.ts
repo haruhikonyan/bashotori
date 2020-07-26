@@ -1,6 +1,6 @@
 import * as puppeteer from 'puppeteer';
 
-const get = async (month: string, day: string, roomIds: string[]) => {
+const get = async (month: string, day: string, roomIds: string[], isLoginMode: boolean) => {
   console.log(`${month}月 Zousigaya start`)
 
   const browser = await puppeteer.launch({args: ['--no-sandbox', '--disable-setuid-sandbox']});
@@ -11,7 +11,9 @@ const get = async (month: string, day: string, roomIds: string[]) => {
   await page.goto(url, { waitUntil: 'networkidle0' });
 
   // ログインページへ
-  let loadPromise = page.waitForNavigation();
+  let loadPromise
+  if (isLoginMode) {
+  loadPromise = page.waitForNavigation();
   await page.click('#rbtnLogin')
   await loadPromise;
 
@@ -22,6 +24,7 @@ const get = async (month: string, day: string, roomIds: string[]) => {
 
   await page.click('#ucPCFooter_pnlNextBtn')
   await loadPromise;
+  }
 
   // 雑司が谷文化
   loadPromise = page.waitForNavigation();
