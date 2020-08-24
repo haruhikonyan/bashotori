@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "ts-node-dev --respawn src/index.ts",
-    "debug": "ts-node-dev --respawn --inspect=9229 src/index.ts",
+    "debug": "ts-node-dev --respawn --inspect=0.0.0.0:9229 src/index.ts",
     "build": "tsc && cp -r src/views dist",
     "start": "node dist"
   },
