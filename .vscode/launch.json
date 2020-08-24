@@ -6,10 +6,7 @@
       "type": "node",
       "request": "launch",
       "runtimeExecutable": "yarn",
-      "runtimeArgs": [
-        "run",
-        "debug"
-      ],
+      "runtimeArgs": ["debug"],
       "sourceMaps": true,
       "restart": true,
       "port": 9229,
