@@ -1,7 +1,30 @@
 import * as puppeteer from 'puppeteer';
 import * as fs from 'fs';
 
+const buildings = {
+  shakai: {
+    id: '#dgShisetsuList_ctl02_chkSelectLeft',
+    name: '社会福祉会館',
+    order: 1,
+    roomIds: ['02', '03', '04', '05', '06', '07'],
+  },
+  hikifine: {
+    id: '#dgShisetsuList_ctl04_chkSelectRight',
+    name: '曳舟文化センター',
+    order: 2,
+    roomIds: ['02', '03', '07', '08', '09'],
+  },
+  midori: {
+    id: '#dgShisetsuList_ctl05_chkSelectLeft',
+    name: 'みどりコミュニティセンター',
+    order: 3,
+    roomIds: ['05', '06', '07'],
+  },
+}
+
+// const get = async (month: string, day: string, buildingkeys: string[]) => {
 const get = async (month: string, day: string) => {
+  const buildingkeys = ['shakai', 'hikifine', 'midori']
   console.log(`${month}月 Sumida start`)
 
   const browser = await puppeteer.launch({args: ['--no-sandbox', '--disable-setuid-sandbox']});
@@ -18,10 +41,9 @@ const get = async (month: string, day: string) => {
 
   // 施設選択
   loadPromise = page.waitForNavigation();
-  // 社会福祉会館
-  await page.click('#dgShisetsuList_ctl02_chkSelectLeft')
-  // みどりコミュニティセンター
-  await page.click('#dgShisetsuList_ctl05_chkSelectLeft')
+  for (const key of buildingkeys) {
+    await page.click(buildings[key].id)
+  }
   await page.click('#ucPCFooter_btnForward');
   await loadPromise;
   
@@ -45,19 +67,8 @@ const get = async (month: string, day: string) => {
     days.push(((await day.jsonValue()) as string).slice( 0, -1 ))
   }
 
-  const placeIdObject = {
-    shakaifukushi: {
-      placeId: '00',
-      roomIds: ['02', '03', '04', '05', '06', '07']
-    },
-    midori: {
-      placeId: '01',
-      roomIds: ['05', '06', '07']
-    },
-  }
-  const placeList = ['shakaifukushi', 'midori']
-  for (const place of placeList) {
-    console.log(`${place} check start`)
+  for (const key of buildingkeys) {
+    console.log(`${key} check start`)
     // 更新ボタンを押す
     loadPromise = page.waitForNavigation();
     await page.click('#btnUpdate');
@@ -67,9 +78,11 @@ const get = async (month: string, day: string) => {
 
     // 0埋めしてチェックループ
     for (const day of days.map(d => ( '0' + d ).slice( -2 ))) {
-      for (const roomId of placeIdObject[place].roomIds) {
+      // TODO: index とかそのへん怪しい
+      for (const [roomId, i] of buildings[key].roomIds) {
         try {
-          const targetId = `#dlRepeat_ctl${placeIdObject[place].placeId}_tpItem_dgTable_ctl${roomId}_b2020${month}${day}`
+          // 施設ごと上から順番に数字が振られる TODO: order 使ってどうにかしたい
+          const targetId = `#dlRepeat_ctl0${i + 1}_tpItem_dgTable_ctl${roomId}_b2020${month}${day}`
           // × だったらスキップする
           const targetElement = await page.$(targetId)
           const status = await targetElement.getProperty('textContent')
@@ -84,13 +97,15 @@ const get = async (month: string, day: string) => {
       }
     }
       
-    const filePath = `screenshots/sumida-ku/${place}_${month}.png`
+    const filePath = `screenshots/sumida-ku/${key}_${month}.png`
+
+    await page.screenshot({ path: filePath, fullPage: true });
     // 空いている部屋がなければスクショがあれば消してループを抜ける
     if (freeCount === 0) {
-      if (fs.existsSync(filePath)) {
-        // あれば削除
-        fs.unlinkSync(filePath);
-      }
+      // if (fs.existsSync(filePath)) {
+      //   // あれば削除
+      //   fs.unlinkSync(filePath);
+      // }
       continue;
     }
     // 空き情報確認
