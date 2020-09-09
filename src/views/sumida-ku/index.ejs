@@ -29,11 +29,11 @@
         <label class="form-check-label">社会福祉会館</label>
       </div>
       <div class="form-check form-switch">
-        <input class="form-check-input" type="checkbox" value="a" name="buildingkeys[]" checked>
+        <input class="form-check-input" type="checkbox" value="hikifine" name="buildingkeys[]" checked>
         <label class="form-check-label">曳舟文化センター</label>
       </div>
       <div class="form-check form-switch">
-        <input class="form-check-input" type="checkbox" value="s" name="buildingkeys[]" checked>
+        <input class="form-check-input" type="checkbox" value="midori" name="buildingkeys[]" checked>
         <label class="form-check-label">みどりコミュニティセンター</label>
       </div>
       <div class="alert alert-warning" role="alert">
@@ -53,13 +53,12 @@
   </div>
   <% if (month != null) { %>
     <h1><%= month %>月 空き状況</h1>
-    <div class="d-flex">
-      <div>
-        <img src="/screenshots/sumida-ku/shakaifukushi_<%= month %>.png">
+    <% if (error == null) { %>
+      <div class="d-flex">
+        <% buildingkeys.forEach(buildingkey => { %>
+          <div><img src="/screenshots/sumida-ku/<%= buildingkey %>_<%= month %>.png"></div>
+        <% }) %>
       </div>
-      <div>
-        <img src="/screenshots/sumida-ku/midori_<%= month %>.png">
-      </div>
-    </div>
+    <% } %>
   <% } %>
 <%- include( '../layout/_footer' ); %>

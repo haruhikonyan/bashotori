@@ -22,9 +22,7 @@ const buildings = {
   },
 }
 
-// const get = async (month: string, day: string, buildingkeys: string[]) => {
-const get = async (month: string, day: string) => {
-  const buildingkeys = ['shakai', 'hikifine', 'midori']
+const get = async (month: string, day: string, buildingkeys: string[]) => {
   console.log(`${month}月 Sumida start`)
 
   const browser = await puppeteer.launch({args: ['--no-sandbox', '--disable-setuid-sandbox']});
@@ -67,7 +65,8 @@ const get = async (month: string, day: string) => {
     days.push(((await day.jsonValue()) as string).slice( 0, -1 ))
   }
 
-  for (const key of buildingkeys) {
+  for (let buildingOrder = 0; buildingOrder < buildingkeys.length; ++buildingOrder) {
+    const key = buildingkeys[buildingOrder]
     console.log(`${key} check start`)
     // 更新ボタンを押す
     loadPromise = page.waitForNavigation();
@@ -79,10 +78,15 @@ const get = async (month: string, day: string) => {
     // 0埋めしてチェックループ
     for (const day of days.map(d => ( '0' + d ).slice( -2 ))) {
       // TODO: index とかそのへん怪しい
-      for (const [roomId, i] of buildings[key].roomIds) {
+      for (const roomId of buildings[key].roomIds) {
         try {
           // 施設ごと上から順番に数字が振られる TODO: order 使ってどうにかしたい
-          const targetId = `#dlRepeat_ctl0${i + 1}_tpItem_dgTable_ctl${roomId}_b2020${month}${day}`
+          const targetId = `#dlRepeat_ctl0${buildingOrder}_tpItem_dgTable_ctl${roomId}_b2020${month}${day}`
+          // dlRepeat_ctl00_tpItem_dgTable_ctl02_b20201003
+          // dlRepeat_ctl02_tpItem_dgTable_ctl0_b2020101
+          console.log(roomId)
+          console.log(buildingOrder)
+          console.log(targetId)
           // × だったらスキップする
           const targetElement = await page.$(targetId)
           const status = await targetElement.getProperty('textContent')
@@ -99,13 +103,12 @@ const get = async (month: string, day: string) => {
       
     const filePath = `screenshots/sumida-ku/${key}_${month}.png`
 
-    await page.screenshot({ path: filePath, fullPage: true });
     // 空いている部屋がなければスクショがあれば消してループを抜ける
     if (freeCount === 0) {
-      // if (fs.existsSync(filePath)) {
-      //   // あれば削除
-      //   fs.unlinkSync(filePath);
-      // }
+      if (fs.existsSync(filePath)) {
+        // あれば削除
+        fs.unlinkSync(filePath);
+      }
       continue;
     }
     // 空き情報確認
