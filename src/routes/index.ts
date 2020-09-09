@@ -43,16 +43,17 @@ router.get('/koto-ku', async (req, res) => {
 
 router.get('/sumida-ku', async (req, res) => {
   const month = req.query.month as string
+  const buildingkeys = req.query.buildingkeys as string[]
   // TODO: まともなエラーハンドリング
   let error = null;
   if (month) {
     try {
-      await sumidaKu(month, '1');
+      await sumidaKu(month, '1', buildingkeys);
     } catch (e) {
       error = e
     }
   }
-  res.render("sumida-ku/index", { month, error });
+  res.render("sumida-ku/index", { month, buildingkeys, error });
 })
 
 export default router;
