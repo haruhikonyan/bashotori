@@ -56,4 +56,8 @@ router.get('/sumida-ku', async (req, res) => {
   res.render("sumida-ku/index", { month, buildingkeys, error });
 })
 
+router.get('/webhook', async (req, res) => {
+  res.json({ webhook: 'test' });
+})
+
 export default router;
