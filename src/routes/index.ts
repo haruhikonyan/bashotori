@@ -67,7 +67,7 @@ router.get('/sumida-ku', async (req, res) => {
   res.render("sumida-ku/index", { month, buildingkeys, error });
 })
 
-router.get('/webhook', middleware(lineConfig as MiddlewareConfig), async (req, res) => {
+router.post('/webhook', middleware(lineConfig as MiddlewareConfig), async (req, res) => {
   // 先行してLINE側にステータスコード200でレスポンスする。
   res.sendStatus(200);
 
