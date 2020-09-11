@@ -8,6 +8,8 @@ app.set('views', path.join(__dirname, 'views'));
 app.set("view engine", "ejs");
 
 app.use('/screenshots', express.static('screenshots'));
+// line bot 用にむりやり
+app.use('/webhook-image', express.static('screenshots'));
 
 
 // CORSの許可
