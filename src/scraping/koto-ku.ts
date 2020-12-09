@@ -42,7 +42,7 @@ const get = async (month: string, day: string) => {
 
   // 開始年月日 選択
   // @ts-ignore
-  await page.evaluate((month, day) => changeDayGif((_dom == 3) ? document.layers['disp'].document.CalendarDays16 : document.CalendarDays16, 2020, month, day), month, day)
+  await page.evaluate((month, day) => changeDayGif((_dom == 3) ? document.layers['disp'].document.CalendarDays16 : document.CalendarDays16, 2021, month, day), month, day)
 
   // 年月日設定
   loadPromise = page.waitForNavigation();

@@ -70,7 +70,7 @@ const get = async (month: string, day: string, roomIds: string[], isLoginMode: b
     // 0埋めしてチェックループ
     for (const day of days.map(d => ( '0' + d ).slice( -2 ))) {
       try {
-        const targetId = `#dlRepeat_ctl00_tpItem_dgTable_ctl${roomId}_b2020${month}${day}`
+        const targetId = `#dlRepeat_ctl00_tpItem_dgTable_ctl${roomId}_b2021${month}${day}`
         // × だったらスキップする
         const targetElement = await page.$(targetId)
         const status = await targetElement.getProperty('textContent')

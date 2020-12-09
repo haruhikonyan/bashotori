@@ -81,9 +81,9 @@ const get = async (month: string, day: string, buildingkeys: string[]) => {
       for (const roomId of buildings[key].roomIds) {
         try {
           // 施設ごと上から順番に数字が振られる TODO: order 使ってどうにかしたい
-          const targetId = `#dlRepeat_ctl0${buildingOrder}_tpItem_dgTable_ctl${roomId}_b2020${month}${day}`
-          // dlRepeat_ctl00_tpItem_dgTable_ctl02_b20201003
-          // dlRepeat_ctl02_tpItem_dgTable_ctl0_b2020101
+          const targetId = `#dlRepeat_ctl0${buildingOrder}_tpItem_dgTable_ctl${roomId}_b2021${month}${day}`
+          // dlRepeat_ctl00_tpItem_dgTable_ctl02_b20211003
+          // dlRepeat_ctl02_tpItem_dgTable_ctl0_b2021101
           console.log(roomId)
           console.log(buildingOrder)
           console.log(targetId)
